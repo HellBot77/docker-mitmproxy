@@ -1,11 +1,12 @@
-FROM rust:latest AS build
+FROM python:latest AS build
 
 ARG TAG=latest
-RUN apt-get update && apt-get install -y python3-pip python3-wheel
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
 RUN pip wheel --wheel-dir=/whl mitmproxy==${TAG}
 RUN find /root/.cache/pip/wheels -type f -name "*.whl" -exec cp {} /whl \;
 
-FROM python:slim
+FROM python:alpine
 
 COPY --from=build /whl /whl
 RUN pip install --no-index --find-links=/whl mitmproxy
