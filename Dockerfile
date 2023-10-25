@@ -12,4 +12,4 @@ COPY --from=build /whl /whl
 RUN pip install --no-index --find-links=/whl mitmproxy
 RUN rm -rf /whl
 EXPOSE 8080 8081
-ENTRYPOINT ["mitmproxy"]
+CMD ["mitmproxy"]
