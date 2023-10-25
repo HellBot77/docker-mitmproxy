@@ -6,7 +6,7 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN pip wheel --wheel-dir=/whl mitmproxy==${TAG}
 RUN find /root/.cache/pip/wheels -type f -name "*.whl" -exec cp {} /whl \;
 
-FROM python:alpine
+FROM python:slim
 
 COPY --from=build /whl /whl
 RUN pip install --no-index --find-links=/whl mitmproxy
