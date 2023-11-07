@@ -64,8 +64,8 @@ jobs:
             ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKERHUB_REPOSITORY }}:${{ needs.get-tag.outputs.tag }}
             ${{ env.DOCKERHUB_USERNAME }}/${{ env.DOCKERHUB_REPOSITORY }}:latest
   cancel-workflow:
-    needs: build-push
-    if: ${{ needs.build-push.result == 'skipped' }}
+    needs: get-tag
+    if: ${{ !needs.get-tag.outputs.tag }}
     runs-on: ubuntu-latest
     steps:
       - name: Cancel workflow
