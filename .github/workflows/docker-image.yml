@@ -72,3 +72,5 @@ jobs:
         uses: styfle/cancel-workflow-action@0.12.0
         with:
           workflow_id: ${{ github.workflow }}
+      - name: Wait for cancellation
+        run: sleep infinity
