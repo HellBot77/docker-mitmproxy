@@ -6,7 +6,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
     pip wheel --wheel-dir=/whl mitmproxy==${TAG} && \
     find /root/.cache/pip/wheels -type f -name "*.whl" -exec cp {} /whl \;
 
-FROM python:alpine
+FROM python:slim
 
 COPY --from=build /whl /whl
 RUN pip --no-cache-dir install --no-index --find-links=/whl mitmproxy && \
