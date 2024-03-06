@@ -9,7 +9,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
 FROM python:slim
 
 COPY --from=build /whl /whl
-RUN pip install --no-index --find-links=/whl mitmproxy && \
+RUN pip --no-cache-dir install --no-index --find-links=/whl mitmproxy && \
     rm -rf /whl
 EXPOSE 8080 8081
 CMD ["mitmproxy"]
