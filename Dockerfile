@@ -1,9 +1,9 @@
 FROM python AS build
 
 ARG TAG=latest
-ENV PATH="/root/.cargo/bin:${PATH}"
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-    pip wheel --wheel-dir=/whl mitmproxy==${TAG} && \
+    PATH="/root/.cargo/bin:${PATH}" && \
+    pip wheel --wheel-dir=/whl mitmproxy$([[ ${TAG} != "latest" ]] && echo "==${TAG}" || echo "") && \
     find /root/.cache/pip/wheels -type f -name "*.whl" -exec cp {} /whl \;
 
 FROM python:slim
